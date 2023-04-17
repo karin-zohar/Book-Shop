@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Shop</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon/icon.png">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body onload="onInit()">
+    
+    <div class="main-grid">
+        
+            <h1>Welcome to my bookshop</h1>
+        
+        <section class="tools-container">
+            <section class="add-book-container box">
+                <label class="title-label" for="add-book">Add book:</label>
+                
+                <form onsubmit="onAddBook(event)" id="add-book">
+                    <div class="add-title">
+                        <label for="book-title">Book title:</label>
+                        <input class="title-input" name="book-title" id="book-title" type="text" placeholder="Enter book title">
+                    </div>
+                    <div class="add-price">
+                        <label for="book-price">Book Price:</label>
+                        <input class="price-input" name="book-price" id="book-price" type="number" step=".01" placeholder="0.00">
+                    </div>
+                    <button class="add-btn">Add</button>
+                </form>
+            </section>
+            
+            <article class="sort-container box">
+                <label class="title-label" for="sort">Sort by:</label>
+                <div class="sort-btns">
+                    <select class="sort-select" name="sort" id="sort">
+                        <option value="title">Title</option>
+                        <option value="author">Author</option>
+                        <option value="price">Price</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                <button class="sort-btn" onclick="onSortDirection(1)">&#8593;</button> <button class="sort-btn" onclick="onSortDirection(-1)">&#8595;</button>
+                </div>
+            </article>
+    
+            <form class="filter-container box" onsubmit="onSetFilterBy(event)">
+                <label class="filter-title title-label" for="filter">Filter by:</label>
+                
+                    <div class="price-checkbox" >
+                        <input type="checkbox" id="checkbox-price" value="price" onchange="showNumInput(this); restoreDefaultValue(this)">
+                        <label for="checkbox-price">Maximum Price</label>
+                    </div>
+                    <br>
+                    <div class="price-num ">
+                        <input class="hide" type="number" placeholder="1.00" step="0.01" min="0" max="100.00" id="number-price" value="1000">
+                    </div>
+                    <div class="rating-checkbox" >
+                        <input type="checkbox" id="checkbox-rating" value="rating" onchange="showNumInput(this);restoreDefaultValue(this)">
+                        <label for="checkbox-rating">Minimum rating</label>
+                    </div>
+                    <br>
+                    <div class="rating-num ">
+                        <input class="hide" type="number" placeholder="5" step="1" min="0" max="10" id="number-rating" value="0">
+                    </div>
+                    
+                    <!-- <button class="filter-btn" onclick="onSetFilterBy()" >Filter</button> -->
+                    <input  class="filter-btn" type="submit" value="filter">
+    
+            </form>
+        </section>
+        
+        <section class="books-table">
+            <table>
+                <thead class="books-table-header">
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Price $</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="books-table-body">
+                    
+                </tbody>
+            </table>
+        </section>
+
+        <section class="read-modal hide">
+        </section>
+
+        <div class="nav">
+            <button type="button" class="nav-left disabled" onclick="onNav(false)">&#10094;</button>
+            <span class="page-numbers-container">
+                <button onclick="onMoveToPage(this)">1</button>
+            </span>
+            <button class="nav-right" onclick="onNav(true)">&#10095;</button>
+        </div>
+
+        <footer> 
+            <a target="_blank" href="https://icons8.com/icon/Gvq4CL3hxDVR/open-book">Open Book</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        </footer>
+    </div>
+
+    <div class="user-msg">user msg</div>
+
+    
+
+
+
+    <script src="js/services/util.service.js"></script>
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/book.service.js"></script>
+    <script src="js/book.controller.js"></script>
+</body>
+</html>
+

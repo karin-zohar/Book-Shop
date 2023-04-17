@@ -1,0 +1,393 @@
+:root {
+    --shadow: plum;
+    --transparent-white: rgba(255, 255, 255, 0.8);
+}
+
+
+body {
+    background-color: wheat;
+    background-image: linear-gradient(wheat, lavenderblush);
+    background-size:calc(100vh*100vw);
+    background-repeat: no-repeat;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    grid-area:header;
+    position: fixed;
+    justify-self: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: auto;
+    text-align: center;
+    padding-top: 20px;
+    color: white;
+    text-shadow: 2px 1px var(--shadow);
+    font-size: 2.5em;
+}
+
+input {
+    border-color: var(--shadow);
+    background-color: lavenderblush;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+input:focus {
+    background-color: white;
+}
+
+input[type="number"] {
+    width: 4.5em;
+}
+
+input[type="checkbox"] {
+    margin: 5px;
+}
+
+label {
+    margin: 5px;
+}
+
+button,
+input[type="submit"] {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 5px;
+    border: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-image: linear-gradient(white, lavenderblush);
+    box-shadow: 5px 5px 5px rgba(221, 160, 221, 0.733);
+    color: darkorchid;
+    cursor: pointer;
+}
+
+select {
+    background-color: white;
+    color: darkorchid;
+    box-shadow: 5px 5px 5px rgba(221, 160, 221, 0.733);
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+}
+
+
+select:hover,
+button:hover,
+input[type="submit"]:hover {
+    box-shadow: 5px 5px 5px hsl(330, 70%, 80%);
+    color: hotpink;
+}
+
+input:focus {
+    border: 2px solid #dda1dd;
+}
+
+.title-label {
+    font-weight: bold;
+    color: darkorchid;
+}
+
+.main-grid {
+    display:grid;
+    height: 97vh;
+    width: 95vw;
+    justify-content: space-between;
+    grid-column-gap: 20px;
+    grid-template-rows: 0.4fr 3fr 0.1fr 0.1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas:
+    "header header header"
+    "tools table modal"
+    "nav nav nav"
+    "footer footer footer";
+}
+
+.books-table {
+    grid-area: table;
+    align-self: center;
+    justify-self: center;
+    border: 2px solid white;
+}
+
+.nav {
+    grid-area:nav;
+    text-align: center;
+}
+
+.nav button {
+    font-weight: 400;
+    color: var(--shadow);
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.nav button:focus {
+    border: 3px solid var(--shadow)
+}
+
+.nav .disabled {
+    color: gray;
+    box-shadow: 5px 5px 5px lightgray;
+    cursor: default;
+}
+
+.page-btn.curr-page {
+    color: white;
+    background-image: linear-gradient(lightpink, var(--shadow));
+    border: 2px solid white;
+}
+
+.tools-container {
+    grid-area: tools;
+    align-self: center;
+}
+
+.tools-container .box {
+    box-sizing: border-box;
+    margin: 15px;
+    padding: 10px;
+    background-color: var(--transparent-white);
+    box-shadow: 10px 10px 10px var(--shadow);
+    border: 2px solid white;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.add-book-container {
+    position: relative;
+}
+
+.add-title, .add-price {
+    margin: 10px;
+}
+.add-btn {
+    justify-self: end;
+}
+
+.sort-container {
+    position: relative;
+}
+
+.sort-btn {
+    box-sizing: border-box;
+}
+
+.filter-container {
+    display: grid;
+    height: 200px;
+    grid-template-rows: 1fr 2fr 2fr 1fr;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+        "title title"
+        "price-checkbox price-num"
+        "rating-checkbox rating-num"
+        "filter filter";
+}
+
+.filter-title {
+    grid-area: title;
+}
+
+.price-checkbox {
+    grid-area: price-checkbox;
+}
+
+.price-num {
+    grid-area: price-num;
+}
+
+.rating-checkbox {
+    grid-area: rating-checkbox;
+}
+
+.rating-num {
+    grid-area: rating-num;  
+}
+
+.filter-btn {
+    grid-area: filter; 
+    justify-self:start;
+    align-self:center;
+    width: 100px; 
+}
+
+.books-table {
+    margin: 20px auto;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-content: space-around;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    background-color: var(--transparent-white);
+    border-radius: 10px;
+    width: 550px;
+    height: 400px;
+    box-shadow: 10px 10px 10px var(--shadow);
+
+}
+
+.books-table-header th {
+    color: darkorchid;
+}
+
+.books-table-body td {
+    box-sizing: border-box;
+    text-align: justify;
+    padding: 10px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.read-modal {
+    grid-area: modal;
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    background-color: var(--transparent-white);
+    box-shadow: 10px 10px 10px var(--shadow);
+    border: 2px solid white;
+    height: 500px;
+    width: 350px;
+}
+
+.read-modal .close-btn {
+    color: var(--shadow);
+    font-size: 1em;
+    position: absolute;
+    align-self: flex-start;
+    justify-self: flex-start;
+    margin: 10px;
+    order: 0;
+    cursor: pointer;
+    box-shadow: none;
+    font-weight: bold;
+
+}
+
+.read-modal>.close-btn:hover {
+    color: hsl(350, 87%, 75%);
+}
+
+.read-modal img {
+    margin: 20px;
+    align-self: center;
+    justify-self: center;
+    height: 150px;
+    box-shadow: 10px 5px 5px hsl(240, 67%, 85%);
+    order: 1;
+}
+
+.read-modal .title {
+    margin: 0px;
+    text-align: center;
+    justify-self: center;
+    order: 2;
+}
+
+.read-modal .author {
+    margin: 0px;
+    text-align: center;
+    justify-self: center;
+    order: 3;
+}
+
+.read-modal ul {
+    margin: 0;
+    box-sizing: border-box;
+    order: 4;
+    padding: 10px;
+    text-align: justify;
+    list-style: none;
+}
+
+.read-modal li span {
+    font-weight: bold;
+}
+
+.rating-container {
+    position: relative;
+}
+
+.rating-filled {
+    color: hsl(51, 100%, 50%);
+}
+
+.rating-unfilled {
+    color: lightgrey;
+}
+
+.rating-controller {
+    margin-left: 10px;
+}
+
+.rating-btn {
+    text-align: center;
+    color: black;
+    box-shadow: none;
+    border: 1px solid hsl(51, 100%, 50%);
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    background-color: white;
+    font-weight: bold;
+    margin: 5px;
+    box-sizing: border-box;
+    padding: 2px;
+    cursor: pointer;
+    background-image: none;
+}
+
+.rating-btn:hover {
+    background-color: hsl(51, 100%, 50%);
+    color: white;
+    box-shadow: none;
+
+}
+
+.summary-txt {
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 10px;
+    text-overflow: clip;
+    overflow-y: scroll;
+    max-height: 130px;
+    scrollbar-color: var(--shadow) lavenderblush;
+
+
+}
+
+.hide {
+    display: none;
+}
+
+footer , footer a {
+    color: var(--shadow);
+    grid-area: footer;
+}
+
+.user-msg {
+    position: fixed;
+    margin: 15px;
+    top: -100px;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: var(--transparent-white);
+    box-shadow: 10px 10px 10px var(--shadow);
+    border: 2px solid white;
+    border-radius: 10px;
+    min-width: 150px;
+    left: 10px;
+    text-align: center;
+    transition: top .5s;
+}
+
+.user-msg.open {
+    top: 10px;
+}
