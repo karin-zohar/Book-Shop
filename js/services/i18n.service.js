@@ -70,8 +70,8 @@ var gTrans = {
         he: 'כותרת'
     },
     'th-price': {
-        en: 'Price ($)',
-        he: 'מחיר (ש"ח)'
+        en: 'Price',
+        he: 'מחיר'
     },
     'th-actions': {
         en: 'Actions',
@@ -117,7 +117,7 @@ function getTrans(transKey) {
 }
 
 function doTrans() {
-    var els = document.querySelectorAll('[data-trans')
+    var els = document.querySelectorAll('[data-trans]')
     els.forEach(el => {
         const transKey = el.dataset.trans
         const transTxt = getTrans(transKey)
@@ -129,4 +129,8 @@ function doTrans() {
 
 function setLang(lang) {
     gCurrLang = lang
+}
+
+function getCurrLang() {
+    return gCurrLang
 }

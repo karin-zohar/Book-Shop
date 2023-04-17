@@ -1,10 +1,16 @@
 'use strict'
 
+var gHammerContainer
+
 function onInit() {
+    doTrans()
     renderFilterByQueryStringParams()
     renderModalByQueryStringParams()
     renderBooks()
     renderPageButtons()
+    setHammerContainer()
+    onSwipe()
+    
 }
 
 
@@ -17,26 +23,30 @@ function renderBooks() {
         flashMsg(`There are no books that match this criteria.`)
         elBooksTableHeader.classList.add('hide')
     }
-    var strHTMLs = books.map(book => `
+    
+    var direction = (getCurrLang() === 'he') ? 'rtl' : 'ltr'
+    var strHTMLs = books.map(book => ` 
     <tr>
-        <td>${book.id}</td>
-        <td>${book.title}</td>
-        <td>${book.price}</td>
-        <td>
-            <button data-trans="delete-btn" onclick="onReadBook('${book.id}')">Details</button>
-            <button data-trans="update-btn" onclick="onUpdateBook('${book.id}')">Reprice</button>
-            <button data-trans="details-btn" onclick="onDeleteBook('${book.id}')">Delete</button>
-        </td>
+    <td>${book.id}</td>
+    <td>${book.title}</td>
+    <td>${book.price}</td>
+    <td>
+    <button data-trans="delete-btn" onclick="onDeleteBook('${book.id}')">Details</button>
+    <button data-trans="update-btn" onclick="onUpdateBook('${book.id}')">Reprice</button>
+    <button data-trans="details-btn" onclick="onReadBook('${book.id}')">Delete</button>
+    </td>
     </tr>
     `
     )
-
+    
     const elBooksTableBody = document.querySelector('.books-table-body')
     elBooksTableBody.innerHTML = strHTMLs.join('')
+    doTrans()
 }
 
 function renderReadModal(book) {
     const elReadModal = document.querySelector('.read-modal')
+    elReadModal.dataset.bookid = book.id
     elReadModal.classList.remove('hide')
     var strHTML = `
     <button class="close-btn" onClick="onCloseModal()">X</button>
@@ -119,8 +129,6 @@ function renderModalByQueryStringParams() {
 }
 
 function flashMsg(msg, isTimed = true) {
-    console.log('flashing')
-    console.log('isTimed: ', isTimed)
     const elMsg = document.querySelector('.user-msg')
     elMsg.innerHTML = msg
     elMsg.classList.add('open')
@@ -288,9 +296,31 @@ function onMoveToPage(pageIdx) {
 
 function onSetLang(lang) {
     setLang(lang)
-    if (lang === 'he') document.body.classList.add('rtl')
-    else document.body.classList.remove('rtl')
+    if (lang === 'he') {
+        // document.body.classList.add('rtl')
+        document.querySelector('html').classList.add('rtl')
+    } 
+    else {
+        // document.body.classList.remove('rtl')
+        document.querySelector('html').classList.remove('rtl')
+    }
+
     renderBooks()
-    // renderReadModal()
     doTrans()
+    renderReadModal()
+}
+
+
+function setHammerContainer() {
+    var elReadModal = document.querySelector('.read-modal')
+    gHammerContainer = new Hammer(elReadModal)
+}
+
+function onSwipe() {
+    gHammerContainer.on('swipeleft swiperight', (ev) => {
+        const bookId = ev.target.dataset.bookid
+        var direction = (ev.type === 'swiperight') ? 1 : -1
+        const nextBookId = getNextBook(bookId, direction)
+        renderReadModal(nextBookId)
+    })
 }

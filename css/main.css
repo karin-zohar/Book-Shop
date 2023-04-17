@@ -8,15 +8,16 @@
     --transparent-white: rgba(255, 255, 255, 0.8);
 }
 
-body.rtl {
+
+html.rtl {
     direction: rtl;
 }
+
 
 body {
     background-color: wheat;
     background-image: linear-gradient(wheat, lavenderblush);
-    background-repeat: repeat-x;
-    height:98.3vh;
+    background-repeat: repeat-y repeat-x;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -90,6 +91,7 @@ button:hover,
 input[type="submit"]:hover {
     box-shadow: 5px 5px 5px hsl(330, 70%, 80%);
     color: hotpink;
+    transition: 0.2s;
 }
 
 input:focus {
@@ -231,8 +233,9 @@ input:focus {
     position: relative;
     justify-content: center;
     align-content: space-around;
-    padding-bottom: 50px;
-    padding-top: 50px;
+    padding-block-start: 50px;
+    padding-block-end: 50px;
+    padding-inline: 20px;
     background-color: var(--transparent-white);
     border-radius: 10px;
     width: 550px;

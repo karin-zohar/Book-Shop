@@ -17,8 +17,8 @@
         <h1 data-trans="title">a bookish dream</h1>
 
         <select class="set-lang" name="set-lang" id="set-lang" onchange="onSetLang(this.value)">
-            <option value="en">English</option>
-            <option value="he">עברית</option>
+            <option id="lang-en" value="en" selected="selected">English</option>
+            <option id="lang-he" value="he">עברית</option>
         </select>
 
         <section class="tools-container">
@@ -100,7 +100,7 @@
             </table>
         </section>
 
-        <section class="read-modal hide">
+        <section data-bookid="none" class="read-modal hide">
         </section>
 
         <div class="nav">
@@ -121,7 +121,7 @@
 
 
 
-
+    <script src="libs/hammer.min.js"></script>
     <script src="js/services/i18n.service.js"></script>
     <script src="js/services/util.service.js"></script>
     <script src="js/services/storage.service.js"></script>

@@ -50,11 +50,33 @@ _storeInitialStringParams()
 
 
 function getBooks() {
-    const books = filterBooks(gBooks)
+    const books = orderBooks()
     const startIdx = gPageIdx * PAGE_SIZE
     return books.slice(startIdx, startIdx + PAGE_SIZE)
 }
  
+function getBookPlace(bookId) {
+    const books = orderBooks()
+    const bookIdx = books.findIndex(book => bookId === book.id)
+    return bookIdx
+}
+
+function getNextBook(bookId, direction) {
+    const books = orderBooks()
+    const bookIdx = getBookPlace(bookId)
+    var nextBookIdx = bookIdx + direction
+    const lastBookIdx = books.length-1
+    if (nextBookIdx > lastBookIdx) nextBookIdx = 0
+    if (nextBookIdx < 0) nextBookIdx = lastBookIdx
+    return books[nextBookIdx]
+}
+
+function orderBooks() {
+    const books = filterBooks(gBooks)
+    sortBooks(books)
+    return books
+}
+
 function getPageIdx() {
     return gPageIdx
 }
