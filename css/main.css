@@ -7,8 +7,9 @@
 body {
     background-color: wheat;
     background-image: linear-gradient(wheat, lavenderblush);
-    background-size:calc(100vh*100vw);
-    background-repeat: no-repeat;
+    
+    /* background-size:calc(100vh*100vw); */
+    /* background-repeat: no-repeat; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

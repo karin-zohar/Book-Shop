@@ -124,6 +124,7 @@ function getUnfilledRatingString(book) {
 
 function getBookImgUrl(title) {
     var imgName = title.replaceAll(' ', '-')
+    imgName = imgName.toLowerCase()
     var imgUrl = `img/covers/${imgName}.jpg`
     return imgUrl
 }
