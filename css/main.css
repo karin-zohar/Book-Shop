@@ -1,15 +1,22 @@
+@font-face {
+    font-family: opensans;
+    src: url(/fonts/static/OpenSans/OpenSans-Bold.ttf);
+  }
+
 :root {
     --shadow: plum;
     --transparent-white: rgba(255, 255, 255, 0.8);
 }
 
+body.rtl {
+    direction: rtl;
+}
 
 body {
     background-color: wheat;
     background-image: linear-gradient(wheat, lavenderblush);
-    
-    /* background-size:calc(100vh*100vw); */
-    /* background-repeat: no-repeat; */
+    background-repeat: repeat-x;
+    height:98.3vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -24,6 +31,10 @@ h1 {
     color: white;
     text-shadow: 2px 1px var(--shadow);
     font-size: 2.5em;
+}
+
+.rtl h1 {
+    font-family: opensans;
 }
 
 input {
@@ -391,4 +402,10 @@ footer , footer a {
 
 .user-msg.open {
     top: 10px;
+}
+
+.set-lang {
+    width: min-content;
+    height: min-content;
+    margin: 20px;
 }

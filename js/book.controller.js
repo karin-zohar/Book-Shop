@@ -7,6 +7,8 @@ function onInit() {
     renderPageButtons()
 }
 
+
+
 function renderBooks() {
     const elBooksTableHeader = document.querySelector('.books-table-header')
     elBooksTableHeader.classList.remove('hide')
@@ -21,9 +23,9 @@ function renderBooks() {
         <td>${book.title}</td>
         <td>${book.price}</td>
         <td>
-            <button onclick="onReadBook('${book.id}')">Details</button>
-            <button onclick="onUpdateBook('${book.id}')">Reprice</button>
-            <button onclick="onDeleteBook('${book.id}')">Delete</button>
+            <button data-trans="delete-btn" onclick="onReadBook('${book.id}')">Details</button>
+            <button data-trans="update-btn" onclick="onUpdateBook('${book.id}')">Reprice</button>
+            <button data-trans="details-btn" onclick="onDeleteBook('${book.id}')">Delete</button>
         </td>
     </tr>
     `
@@ -43,12 +45,12 @@ function renderReadModal(book) {
         <h3 class="author">${(book.author) ? book.author : ''}</h3>
         <ul>
             <li>
-            <span>Price:</span>
+            <span data-trans="price-title">Price:</span>
              $${book.price}  
             </li>
             <li>
             <span class="rating-container">
-                <span class="rating-title">Rating: </span>
+                <span data-trans="rating-title" class="rating-title">Rating: </span>
                 <span class="rating-filled">${getRatingString(book)}</span><span class="rating-unfilled">${getUnfilledRatingString(book)}</span>
                     <span class ="rating-controller">
                         <button class="rating-btn" onclick="onChangeRating('${book.id}',false)">-</button> 
@@ -59,7 +61,7 @@ function renderReadModal(book) {
             </li>
             
             <li class="summary">
-            <span> Summary: </span>
+            <span data-trans="summary-title"> Summary: </span>
              
                 <article class="summary-txt">
                     ${book.summary}
@@ -283,3 +285,12 @@ function onMoveToPage(pageIdx) {
     renderPageButtons()
     handleNavArrows()
 } 
+
+function onSetLang(lang) {
+    setLang(lang)
+    if (lang === 'he') document.body.classList.add('rtl')
+    else document.body.classList.remove('rtl')
+    renderBooks()
+    // renderReadModal()
+    doTrans()
+}

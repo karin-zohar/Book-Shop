@@ -19,11 +19,11 @@ function getRandomFloat(min, max) {
 
 function getLorem() {
     const lorem =
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
         Sed id elit velit. Nunc bibendum justo a nisl commodo, vel fringilla mauris faucibus. 
         Maecenas vitae lorem eget lectus sodales bibendum quis vitae odio.
         Aliquam sed nunc at sapien ultrices vestibulum. Vivamus finibus nibh enim,
         quis varius ipsum lacinia vel. In hac habitasse platea dictumst.`
-
+        
     return lorem
 }
