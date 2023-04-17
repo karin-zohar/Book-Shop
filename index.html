@@ -89,8 +89,8 @@
                 <thead class="books-table-header">
                     <tr>
                         <th data-trans="th-id">ID</th>
-                        <th data-trans="th-title">Title</th>
-                        <th data-trans="th-price">Price</th>
+                        <th class="clickable" data-trans="th-title" id="th-title" onclick="onSortingHeader(this.id)">Title</th>
+                        <th class="clickable" data-trans="th-price" id="th-price" onclick="onSortingHeader(this.id)">Price</th>
                         <th data-trans="th-actions">Actions</th>
                     </tr>
                 </thead>

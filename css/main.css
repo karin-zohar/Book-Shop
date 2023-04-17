@@ -412,3 +412,7 @@ footer , footer a {
     height: min-content;
     margin: 20px;
 }
+
+.clickable {
+    cursor: pointer;
+}

@@ -6,6 +6,7 @@ function onInit() {
     doTrans()
     renderFilterByQueryStringParams()
     renderModalByQueryStringParams()
+    setLangByQueryParams()
     renderBooks()
     renderPageButtons()
     setHammerContainer()
@@ -110,10 +111,6 @@ function renderFilterByQueryStringParams() {
     document.querySelector('#number-price').value = filterBy.price
     document.querySelector('#number-rating').value = filterBy.rating
     setBooksFilter(filterBy)
-    // getUrl()
-
-    console.log('filterBy.price: ', filterBy.price)
-    console.log('filterBy.rating: ', filterBy.rating)
     if (filterBy.price !== 1000) document.querySelector('#number-price').classList.remove('hide')
     if (filterBy.rating) document.querySelector('#number-rating').classList.remove('hide')
 }
@@ -122,11 +119,19 @@ function renderFilterByQueryStringParams() {
 function renderModalByQueryStringParams() {
     const queryStringParams = new URLSearchParams(window.location.search)
     const title = queryStringParams.get('book-details')
-    if (!title) return
+    if (!title || title === 'none') return
     var bookTitle = title.replaceAll('-', ' ')
     var book = getBookByTitle(bookTitle)
     renderReadModal(book)
 }
+
+
+function setLangByQueryParams() {
+    const queryStringParams = new URLSearchParams(window.location.search)
+    const lang = queryStringParams.get('lang')
+    onSetLang(lang)
+}
+
 
 function flashMsg(msg, isTimed = true) {
     const elMsg = document.querySelector('.user-msg')
@@ -210,6 +215,7 @@ function onChangeRating(bookId, isIncrease) {
     const book = getBookById(bookId)
     changeRating(book, isIncrease)
     renderReadModal(book)
+    doTrans()
 }
 
 function onSortDirection(isAscending) {
@@ -220,9 +226,7 @@ function onSortDirection(isAscending) {
 }
 
 function showNumInput(checkValue) {
-    console.log('showing num input')
     const elNumInput = document.querySelector(`#number-${checkValue.value}`)
-    console.log('elNumInput: ', elNumInput)
     elNumInput.classList.toggle('hide')
     elNumInput.classList.toggle('active')
 }
@@ -253,10 +257,7 @@ function onSetFilterBy(ev) {
 
 function getUrl() {
     const stringParamsObj = getStringParams()
-    var connector = (stringParamsObj['filtering']) ? '&' : ''
-    var CombinedQueryStringParams = stringParamsObj['filtering'] + `${connector}` + stringParamsObj['readModal']
-
-
+    var CombinedQueryStringParams = `${stringParamsObj['lang']}&${stringParamsObj['filtering']}&${stringParamsObj['readModal']}` 
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + CombinedQueryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
 
@@ -304,10 +305,14 @@ function onSetLang(lang) {
         // document.body.classList.remove('rtl')
         document.querySelector('html').classList.remove('rtl')
     }
-
+    var elLangOption = document.querySelector(`#lang-${lang}`)
+    elLangOption.selected = true
     renderBooks()
     doTrans()
-    renderReadModal()
+
+    const queryStringParams = `lang=${lang}`
+    setStringParams({ lang: queryStringParams })
+    getUrl()
 }
 
 
@@ -323,4 +328,12 @@ function onSwipe() {
         const nextBookId = getNextBook(bookId, direction)
         renderReadModal(nextBookId)
     })
+}
+
+function onSortingHeader(id) {
+    const headerId = id
+    const sortValue = headerId.slice(3)
+    setSortBy(sortValue)
+    renderBooks()
+    
 }

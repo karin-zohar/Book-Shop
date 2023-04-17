@@ -40,7 +40,7 @@ var gSortDirection = -1 //descending
 var gSortBy = 'title'
 var gFilterBy = { price: 1000, rating: 0 }
 
-var gStringParams = { filtering: '', readModal: '' }
+var gStringParams = { filtering: 'max-price=100&min-rating=0', readModal: 'book-details=none', lang: 'lang=en' }
 var gNextIdx = 100
 
 
@@ -54,7 +54,7 @@ function getBooks() {
     const startIdx = gPageIdx * PAGE_SIZE
     return books.slice(startIdx, startIdx + PAGE_SIZE)
 }
- 
+
 function getBookPlace(bookId) {
     const books = orderBooks()
     const bookIdx = books.findIndex(book => bookId === book.id)
@@ -65,7 +65,7 @@ function getNextBook(bookId, direction) {
     const books = orderBooks()
     const bookIdx = getBookPlace(bookId)
     var nextBookIdx = bookIdx + direction
-    const lastBookIdx = books.length-1
+    const lastBookIdx = books.length - 1
     if (nextBookIdx > lastBookIdx) nextBookIdx = 0
     if (nextBookIdx < 0) nextBookIdx = lastBookIdx
     return books[nextBookIdx]
@@ -86,7 +86,7 @@ function getNumberOfPages() {
 }
 
 function movePage(direction) {
-    var lastPage = getNumberOfPages()-1
+    var lastPage = getNumberOfPages() - 1
     if (direction) {
         if (gPageIdx === lastPage) return
         gPageIdx++
@@ -124,7 +124,6 @@ function deleteBook(bookId) {
 }
 
 function updateBook(bookId, bookPrice) {
-    console.log('bookPrice: ', bookPrice)
     const bookIdx = gBooks.findIndex(book => bookId === book.id)
     const book = gBooks[bookIdx]
     book.price = bookPrice
@@ -191,11 +190,15 @@ function filterBooks(books) {
 
 function setStringParams(paramObj) {
     var currUrlParams = loadFromStorage('currUrlParams')
-    var filteringParam = (paramObj['filtering']) ? paramObj['filtering'] : (currUrlParams['filtering']) 
-     
-    var readModalParam = (paramObj['readModal']) ? paramObj['readModal'] : (currUrlParams['readModal']) 
-    
-    gStringParams = { filtering: filteringParam, readModal: readModalParam }
+    var filteringParam = (paramObj['filtering']) ? paramObj['filtering'] : (currUrlParams['filtering'])
+    var readModalParam = (paramObj['readModal']) ? paramObj['readModal'] : (currUrlParams['readModal'])
+    var langParam = (paramObj['lang']) ? paramObj['lang'] : (currUrlParams['lang'])
+
+    gStringParams = {
+        filtering: filteringParam,
+        readModal: readModalParam,
+        lang: langParam
+    }
     saveToStorage('currUrlParams', gStringParams)
 
 }
@@ -248,6 +251,6 @@ function _loadFilteringFromStorage() {
 
 function _storeInitialStringParams() {
     if (!localStorage.currUrlParams) {
-        saveToStorage('currUrlParams', { filtering: '', readModal: '' })
+        saveToStorage('currUrlParams', { filtering: 'max-price=100&min-rating=0', readModal: 'book-details=none', lang: 'lang=en' })
     }
 }
