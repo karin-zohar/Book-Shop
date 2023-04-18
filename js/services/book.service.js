@@ -106,7 +106,7 @@ function getBookById(bookId) {
 }
 
 function getBookByTitle(bookTitle) {
-    const bookIdx = gBooks.findIndex(book => bookTitle === book.title)
+    const bookIdx = gBooks.findIndex(book => bookTitle === book.title.toLowerCase())
     return gBooks[bookIdx]
 }
 

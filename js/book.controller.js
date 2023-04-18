@@ -11,7 +11,7 @@ function onInit() {
     renderPageButtons()
     setHammerContainer()
     onSwipe()
-    
+
 }
 
 
@@ -24,7 +24,7 @@ function renderBooks() {
         flashMsg(`There are no books that match this criteria.`)
         elBooksTableHeader.classList.add('hide')
     }
-    
+
     var direction = (getCurrLang() === 'he') ? 'rtl' : 'ltr'
     var strHTMLs = books.map(book => ` 
     <tr>
@@ -39,7 +39,7 @@ function renderBooks() {
     </tr>
     `
     )
-    
+
     const elBooksTableBody = document.querySelector('.books-table-body')
     elBooksTableBody.innerHTML = strHTMLs.join('')
     doTrans()
@@ -82,6 +82,8 @@ function renderReadModal(book) {
         </ul>
     `
     elReadModal.innerHTML = strHTML
+    doTrans()
+
 }
 
 function renderPageButtons() {
@@ -141,7 +143,7 @@ function flashMsg(msg, isTimed = true) {
         setTimeout(() => {
             elMsg.classList.remove('open')
         }, 4000)
-    } 
+    }
 }
 
 
@@ -176,8 +178,8 @@ function onUpdateBook(bookId) {
     <button onclick="onUpdateBtn('${bookId}')">Update</button>
     `
     flashMsg(strHTML, false)
-    
-    
+
+
 }
 
 function onUpdateBtn(bookId) {
@@ -195,15 +197,18 @@ function onReadBook(bookId) {
     renderReadModal(book)
     openModal()
     var addressTitle = book.title.replaceAll(' ', '-')
+
     const queryStringParams = `book-details=${addressTitle}`
     setStringParams({ readModal: queryStringParams })
     getUrl()
+
 }
 
 function onCloseModal() {
     const elReadModal = document.querySelector('.read-modal')
     elReadModal.classList.add('hide')
-    setStringParams({ readModal: '' })
+    const queryStringParams = `book-details=none`
+    setStringParams({ readModal: queryStringParams })
 }
 
 function openModal() {
@@ -257,7 +262,7 @@ function onSetFilterBy(ev) {
 
 function getUrl() {
     const stringParamsObj = getStringParams()
-    var CombinedQueryStringParams = `${stringParamsObj['lang']}&${stringParamsObj['filtering']}&${stringParamsObj['readModal']}` 
+    var CombinedQueryStringParams = `${stringParamsObj['lang']}&${stringParamsObj['filtering']}&${stringParamsObj['readModal']}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + CombinedQueryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
 
@@ -293,14 +298,15 @@ function onMoveToPage(pageIdx) {
     renderBooks()
     renderPageButtons()
     handleNavArrows()
-} 
+}
 
 function onSetLang(lang) {
+    if (!lang) lang = 'en'
     setLang(lang)
     if (lang === 'he') {
         // document.body.classList.add('rtl')
         document.querySelector('html').classList.add('rtl')
-    } 
+    }
     else {
         // document.body.classList.remove('rtl')
         document.querySelector('html').classList.remove('rtl')
@@ -325,8 +331,12 @@ function onSwipe() {
     gHammerContainer.on('swipeleft swiperight', (ev) => {
         const bookId = ev.target.dataset.bookid
         var direction = (ev.type === 'swiperight') ? 1 : -1
-        const nextBookId = getNextBook(bookId, direction)
-        renderReadModal(nextBookId)
+        const nextBook = getNextBook(bookId, direction)
+        renderReadModal(nextBook)
+        var addressTitle = nextBook.title.replaceAll(' ', '-').toLowerCase()      
+        const queryStringParams = `book-details=${addressTitle}`
+            setStringParams({ readModal: queryStringParams })
+            getUrl()
     })
 }
 
@@ -335,5 +345,5 @@ function onSortingHeader(id) {
     const sortValue = headerId.slice(3)
     setSortBy(sortValue)
     renderBooks()
-    
+
 }
