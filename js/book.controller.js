@@ -123,7 +123,10 @@ function renderModalByQueryStringParams() {
     const title = queryStringParams.get('book-details')
     if (!title || title === 'none') return
     var bookTitle = title.replaceAll('-', ' ')
+    bookTitle = bookTitle.toLowerCase()
+    // console.log('bookTitle: ', bookTitle)
     var book = getBookByTitle(bookTitle)
+    // console.log('book: ', book)
     renderReadModal(book)
 }
 
@@ -232,6 +235,7 @@ function onSortDirection(isAscending) {
 
 function showNumInput(checkValue) {
     const elNumInput = document.querySelector(`#number-${checkValue.value}`)
+    // if (checkValue.isSelected) console.log('checkValue: ', checkValue)
     elNumInput.classList.toggle('hide')
     elNumInput.classList.toggle('active')
 }

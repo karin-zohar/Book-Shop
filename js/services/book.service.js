@@ -6,7 +6,7 @@ const gRatingStar = '&#9733;'
 const gUnfilledRatingStar = '&#9734;'
 
 var gTitles = [
-    'A Conpiracy of Kings',
+    'A Conspiracy of Kings',
     'A Monster Calls',
     'Emma',
     'Hell Bent',
@@ -36,7 +36,7 @@ var gTitles = [
 
 var gBooks
 var gPageIdx = 0
-var gSortDirection = -1 //descending
+var gSortDirection = 1 //ascending
 var gSortBy = 'title'
 var gFilterBy = { price: 1000, rating: 0 }
 
@@ -107,6 +107,9 @@ function getBookById(bookId) {
 
 function getBookByTitle(bookTitle) {
     const bookIdx = gBooks.findIndex(book => bookTitle === book.title.toLowerCase())
+    console.log('gBooks[0].title.toLowerCase(): ', gBooks[0].title.toLowerCase())
+    console.log('bookIdx: ', bookIdx)
+    
     return gBooks[bookIdx]
 }
 
@@ -147,6 +150,7 @@ function getBookImgUrl(title) {
     var imgName = title.replaceAll(' ', '-')
     imgName = imgName.toLowerCase()
     var imgUrl = `img/covers/${imgName}.jpg`
+    console.log('imgUrl: ', imgUrl)
     return imgUrl
 }
 
